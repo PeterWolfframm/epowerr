@@ -55,4 +55,7 @@ public class ChargingStation {
         this.currentCustomer = null;
         this.currentTransaction = null;
     }
+
+    public void updateType(String newType) {
+    }
 }
