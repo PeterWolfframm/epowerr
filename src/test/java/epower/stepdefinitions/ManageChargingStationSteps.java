@@ -1,12 +1,14 @@
 package epower.stepdefinitions;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-import io.cucumber.java.en.*;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 import org.epower.model.ChargingStation;
 import org.epower.model.Location;
 
 import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ManageChargingStationSteps {
 
@@ -50,6 +52,23 @@ public class ManageChargingStationSteps {
     public void verifyStationStatus(String stationId, String expectedStatus) {
         ChargingStation station = location.getStationById(stationId);
         assertEquals(expectedStatus, station.getStatus(), "Station status not updated correctly");
+    }
+    //ERROR CASE
+    @When("I try to change the status of {string} to an invalid status")
+    public void changeStationStatusInvalid(String stationId) {
+        currentStation = location.getStationById(stationId);
+        currentStation.updateStatus("AA");
+    }
+
+    @Then("{string} should not change the status")
+    public void verifyStationStatusInvalidInput(String stationId) throws Exception {
+        ChargingStation station = location.getStationById(stationId);
+        if(station.getStatus().equals("AC")|| station.getStatus().equals("DC")){
+            // passt
+        }
+        else{
+            throw new Exception("Ungültiger Status");
+        }
     }
 
     @When("I add a {string} charging station named {string} at {string}")
