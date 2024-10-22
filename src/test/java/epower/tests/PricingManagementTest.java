@@ -1,10 +1,10 @@
 package epower.tests;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import org.epower.model.PricingManagement;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class PricingManagementTest {
 
@@ -37,5 +37,17 @@ class PricingManagementTest {
     void testGetPriceForDCCharging() {
         pricingManagement.setDCPrice("Meidling", 0.50);
         assertEquals(0.50, pricingManagement.getPrice("Meidling", "DC"));
+    }
+
+    // ERROR CASE TESTS
+    @Test
+    void testSetNegativeACPrice(){
+        pricingManagement.setACPrice("Meidling", -1.5);
+        assertEquals(0.0, pricingManagement.getPrice("Meidling", "AC"));
+    }
+    @Test
+    void testSetNegativeDCPrice(){
+        pricingManagement.setDCPrice("Meidling", -1.5);
+        assertEquals(0.0, pricingManagement.getPrice("Meidling", "DC"));
     }
 }

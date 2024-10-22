@@ -39,7 +39,9 @@ public class Customer {
     }
 
     public void topUp(double amount) {
-        this.balance += amount;
+        if(amount > 0){
+            this.balance += amount;
+        }
     }
 
     public boolean canStartCharging(double pricePerKWh) {

@@ -15,11 +15,15 @@ public class PricingManagement {
 
     // Getters and Setters
     public void setACPrice(String location, double newPrice) {
-        acPricesByLocation.put(location, newPrice);
+        if(newPrice > 0){
+            acPricesByLocation.put(location, newPrice);
+        }
     }
 
     public void setDCPrice(String location, double newPrice) {
-        dcPricesByLocation.put(location, newPrice);
+        if(newPrice > 0){
+            dcPricesByLocation.put(location, newPrice);
+        }
     }
 
     public double getACPrice(String location) {

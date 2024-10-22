@@ -57,5 +57,8 @@ public class ChargingStation {
     }
 
     public void updateType(String newType) {
+        if(newType.equals("AC") || newType.equals("DC")){
+            this.type= newType;
+        }
     }
 }

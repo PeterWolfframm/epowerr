@@ -1,13 +1,12 @@
 package epower.tests;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-
 import org.epower.model.ChargingStation;
 import org.epower.model.Customer;
 import org.epower.model.Transaction;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class ChargingStationTest {
 
@@ -47,5 +46,12 @@ class ChargingStationTest {
         station.endChargingSession();
         assertEquals("in operation free", station.getStatus());
         assertNull(station.getCurrentTransaction());
+    }
+
+    // ERROR CASE TEST
+    @Test
+    void testWrongType(){
+        station.updateType("AA");
+        assertNotEquals("AA", station.getType());
     }
 }

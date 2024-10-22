@@ -1,11 +1,11 @@
 package epower.tests;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import org.epower.model.Customer;
 import org.epower.model.Transaction;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class CustomerTest {
 
@@ -50,5 +50,12 @@ class CustomerTest {
         transaction.setEnergyConsumed(20);  // Simulate 20 kWh consumed
         customer.endTransaction(transaction);
         assertEquals(94.0, customer.getBalance());  // (100 - 20 kWh * 0.30 EUR/kWh)
+    }
+
+    //ERROR CASE TEST
+    @Test
+    void testTopUpBalanceNegativeAmount() {
+        customer.topUp(-50.0);
+        assertEquals(100.0, customer.getBalance());
     }
 }

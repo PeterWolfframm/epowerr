@@ -1,10 +1,13 @@
 package epower.stepdefinitions;
-import static org.junit.jupiter.api.Assertions.*;
 
-import io.cucumber.java.en.*;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 import org.epower.model.PricingManagement;
 import org.epower.model.Report;
 import org.epower.model.Transaction;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class BillingSteps {
 
@@ -84,5 +87,31 @@ public class BillingSteps {
     @Then("show the total amount charged")
     public void verifyTotalAmountCharged() {
         System.out.println("Total amount charged is displayed in the billing report.");
+    }
+
+    //ERROR CASE
+    private double ac;
+    private double dc;
+    @When("an attempt is made to enter a negative price")
+    public void setNegativePrice(String chargingMode, String location, double price){
+        // enter negative price
+        ac = pricingManagement.getACPrice(location);
+        dc = pricingManagement.getDCPrice(location);
+        if(price > 0) return;
+        if (chargingMode.equals("AC")) {
+            pricingManagement.setACPrice(location, price);
+        } else if (chargingMode.equals("DC")) {
+            pricingManagement.setDCPrice(location, price);
+        }
+    }
+    @Then("The price should stay the same")
+    public void checkPrice(String chargingMode, String location, double expectedPrice){
+        //price stays the same
+        if(chargingMode.equals("AC")){
+            assertEquals(ac, pricingManagement.getACPrice(location), "Price was not updated correctly");
+        }
+        else if(chargingMode.equals("DC")){
+            assertEquals(dc, pricingManagement.getDCPrice(location), "Price was not updated correctly");
+        }
     }
 }
