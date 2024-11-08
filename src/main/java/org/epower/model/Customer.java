@@ -49,10 +49,13 @@ public class Customer {
     }
 
     public void startTransaction(Transaction transaction) {
-        if(this.balance>0){
+        if(this.canStartCharging(transaction.getPricePerKWh())){
             transactions.add(transaction);
         }
-        else System.out.println("Pay your existing bills first please.");
+        else if(this.balance<0){
+            System.out.println("Pay your existing bills first please.");
+        }
+        else System.out.println("Your balance is not high enough");
     }
 
     public void endTransaction(Transaction transaction) {

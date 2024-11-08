@@ -41,7 +41,7 @@ Feature: Administration and Billing
 
 
   # Edge Cases:
-  #Scenario: Not enough balance for charging request
- #   Given I am a Customer
-  #  When I try to start a charging request that exceeds my prepaid balance
-  #  Then The system should prevent the session from starting
+  Scenario: Not enough balance for charging request
+    Given I am a Customer
+    When I try to start a charging request that exceeds my prepaid balance
+    Then The system should prevent the session from starting

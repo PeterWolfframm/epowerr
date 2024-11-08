@@ -35,3 +35,10 @@ Feature: Manage Charging Stations
     And there is a location with a station
     When I try to update the type of "Station_B4" to "AA"
     Then the type of "Station_B4" should not change
+
+  # Edge Cases:
+  Scenario: Set charging station status to out of order
+    Given I am an operator
+    When a charging station is out of order
+    And I change the status to "Out of order"
+    Then the status should be updated

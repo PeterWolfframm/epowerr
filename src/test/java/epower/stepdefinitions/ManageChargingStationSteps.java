@@ -107,4 +107,16 @@ public class ManageChargingStationSteps {
             throw new Exception("Ungültiger Status");
         }
     }
+    // EDGE Cases
+    ChargingStation x = location.getStationById("CS1001");
+    String type= x.getStatus();
+    @When("A charging station is out of order and I update the status")
+    public void updateStatusOutOfOrder(){
+        x.updateType("Out of Order");
+    }
+
+    @Then("The status should be updated")
+    public void checkStatus(){
+        assertEquals(type, x.getStatus(), "Status mismatch");
+    }
 }
