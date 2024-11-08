@@ -49,11 +49,18 @@ public class Customer {
     }
 
     public void startTransaction(Transaction transaction) {
-        transactions.add(transaction);
+        if(this.balance>0){
+            transactions.add(transaction);
+        }
+        else System.out.println("Pay your existing bills first please.");
     }
 
     public void endTransaction(Transaction transaction) {
         this.balance -= transaction.calculateTotalPrice();
         transaction.setEndTime(java.time.LocalDateTime.now());
+    }
+    // helpFunc
+    public void getBalanceBelow0(int x){
+        this.balance -= x;
     }
 }

@@ -3,10 +3,14 @@ package epower.stepdefinitions;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.epower.model.ChargingStation;
 import org.epower.model.Customer;
+import org.epower.model.Location;
+import org.epower.model.Transaction;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class CustomerAccountManagerSteps {
 
@@ -20,16 +24,6 @@ public class CustomerAccountManagerSteps {
     @Then("a new customer account should be created")
     public void verifyCustomerAccountCreated() {
         assertNotNull(customer, "Customer account was not created");
-    }
-
-    //ERROR CASE
-    @When("User versucht sich ohne Daten anzulegen")
-    public void createUserWithoutData(){
-        //Customer keinName = new Customer();
-    }
-    @Then("The User should not be created")
-    public void checkUserWithoutDataNotCreated(){
-        // check das eh kein User erstellt wurde?
     }
 
     @Then("they should receive a unique customer identity")
@@ -93,7 +87,8 @@ public class CustomerAccountManagerSteps {
     public void verifyCustomerHistory() {
         System.out.println("Customer's history of charging sessions and top-ups displayed.");
     }
-    //ERROR Case
+
+    //ERROR Cases
     private double balanceBef;
     @When("the customer trys to top up their account with a negative amount")
     public void topUpAccountNegativeAmount(double topUpAmount) {
@@ -106,4 +101,38 @@ public class CustomerAccountManagerSteps {
     public void verifyAccountBalanceStillsame(double expectedBalance) {
         assertEquals(expectedBalance, customer.getBalance(), "Customer balance mismatch");
     }
+
+    @When("A user trys to create an account without providing all the required registration information")
+    public void createUserWithoutData(){
+        //Customer keinName = new Customer();
+    }
+    @Then("No account should be created")
+    public void checkUserWithoutDataNotCreated(){
+        // check das eh kein User erstellt wurde?
+    }
+
+    // EDGE Cases
+    Customer noMoney = new Customer("1234", "John Doe");
+    Location l = new Location("Testort");
+    ChargingStation cs = new ChargingStation("1234", "Testort", "AC");
+    @When("A user transaction brings their pre paid balance below 0")
+    public void getUserBalanceBelow0(){
+        noMoney.getBalanceBelow0(5);
+    }
+
+    @Then("This user shouldn't be able to charge anymore until his balance is positive again")
+    public void tryToStartTransactionWithNegativeBalance(){
+        List<Transaction> before = noMoney.getTransactionHistory();
+        Transaction n = new Transaction("1234", "1234", "AC", 3.12);
+        noMoney.startTransaction(n);
+
+        assertEquals(noMoney.getTransactionHistory(), before, "Transaction started even tho no balance");
+
+        // when balance positive again:
+
+        noMoney.topUp(200);
+        noMoney.startTransaction(n);
+        assertNotEquals(noMoney.getTransactionHistory(), before, "Error in Transaction List");
+    }
+
 }

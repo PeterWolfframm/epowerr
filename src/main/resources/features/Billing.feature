@@ -38,3 +38,10 @@ Feature: Administration and Billing
     Given I am an operator
     When I try to input a negative price for a station
     Then the price should stay the same
+
+
+  # Edge Cases:
+  #Scenario: Not enough balance for charging request
+ #   Given I am a Customer
+  #  When I try to start a charging request that exceeds my prepaid balance
+  #  Then The system should prevent the session from starting
