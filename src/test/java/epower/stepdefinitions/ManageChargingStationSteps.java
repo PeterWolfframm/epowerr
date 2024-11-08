@@ -53,23 +53,6 @@ public class ManageChargingStationSteps {
         ChargingStation station = location.getStationById(stationId);
         assertEquals(expectedStatus, station.getStatus(), "Station status not updated correctly");
     }
-    //ERROR CASE
-    @When("I try to change the status of {string} to an invalid status")
-    public void changeStationStatusInvalid(String stationId) {
-        currentStation = location.getStationById(stationId);
-        currentStation.updateStatus("AA");
-    }
-
-    @Then("{string} should not change the status")
-    public void verifyStationStatusInvalidInput(String stationId) throws Exception {
-        ChargingStation station = location.getStationById(stationId);
-        if(station.getStatus().equals("AC")|| station.getStatus().equals("DC")){
-            // passt
-        }
-        else{
-            throw new Exception("Ungültiger Status");
-        }
-    }
 
     @When("I add a {string} charging station named {string} at {string}")
     public void addChargingStation(String type, String stationName, String locationName) {
@@ -106,5 +89,22 @@ public class ManageChargingStationSteps {
     public void verifyUpdatedStationType(String stationId, String expectedType) {
         ChargingStation station = location.getStationById(stationId);
         assertEquals(expectedType, station.getType(), "Station type not updated correctly");
+    }
+    //ERROR CASE
+    @When("I try to change the status of {string} to an invalid status")
+    public void changeStationStatusInvalid(String stationId) {
+        currentStation = location.getStationById(stationId);
+        currentStation.updateStatus("AA");
+    }
+
+    @Then("{string} should not change the status")
+    public void verifyStationStatusInvalidInput(String stationId) throws Exception {
+        ChargingStation station = location.getStationById(stationId);
+        if(station.getStatus().equals("AC")|| station.getStatus().equals("DC")){
+            // passt
+        }
+        else{
+            throw new Exception("Ungültiger Status");
+        }
     }
 }

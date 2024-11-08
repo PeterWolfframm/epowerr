@@ -32,3 +32,9 @@ Feature: Administration and Billing
     Then the report should list all sessions sorted by start time
     And include details like session number, location, charging point, mode, duration, energy consumed, and price
     And show the total amount charged
+
+  # Error Cases:
+  Scenario: Negative price input
+    Given I am an operator
+    When I try to input a negative price for a station
+    Then the price should stay the same

@@ -28,3 +28,10 @@ Feature: Manage Charging Stations
     Given a charging station "Station_B4" at "Berlin" is of type "AC"
     When I update the type of "Station_B4" to "DC"
     Then "Station_B4" should now be listed as type "DC"
+
+  # Error Cases:
+  Scenario: Change name of charging Station to "AA" (anything other than "AC" or "DC")
+    Given I am an operator
+    And there is a location with a station
+    When I try to update the type of "Station_B4" to "AA"
+    Then the type of "Station_B4" should not change

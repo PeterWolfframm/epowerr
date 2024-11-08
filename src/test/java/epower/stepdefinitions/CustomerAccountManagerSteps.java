@@ -52,20 +52,6 @@ public class CustomerAccountManagerSteps {
     public void verifyAccountBalance(double expectedBalance) {
         assertEquals(expectedBalance, customer.getBalance(), "Customer balance mismatch");
     }
-
-    //ERROR Case
-    private double balanceBef;
-    @When("the customer trys to top up their account with a negative amount")
-    public void topUpAccountNegativeAmount(double topUpAmount) {
-        if(topUpAmount>0) return;
-        balanceBef = customer.getBalance();
-        customer.topUp(topUpAmount);
-        verifyAccountBalanceStillsame(balanceBef);
-    }
-    @Then("The amount shouldnt be deducted")
-    public void verifyAccountBalanceStillsame(double expectedBalance) {
-        assertEquals(expectedBalance, customer.getBalance(), "Customer balance mismatch");
-    }
     @When("the customer starts a charging session at {string} using {string} mode")
     public void startChargingSession(String stationId, String mode) {
         // Logic to start a charging session
@@ -106,5 +92,18 @@ public class CustomerAccountManagerSteps {
     @Then("a list of all past charging sessions and top-ups, sorted by date")
     public void verifyCustomerHistory() {
         System.out.println("Customer's history of charging sessions and top-ups displayed.");
+    }
+    //ERROR Case
+    private double balanceBef;
+    @When("the customer trys to top up their account with a negative amount")
+    public void topUpAccountNegativeAmount(double topUpAmount) {
+        if(topUpAmount>0) return;
+        balanceBef = customer.getBalance();
+        customer.topUp(topUpAmount);
+        verifyAccountBalanceStillsame(balanceBef);
+    }
+    @Then("The amount shouldnt be deducted")
+    public void verifyAccountBalanceStillsame(double expectedBalance) {
+        assertEquals(expectedBalance, customer.getBalance(), "Customer balance mismatch");
     }
 }
