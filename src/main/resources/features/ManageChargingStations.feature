@@ -7,7 +7,7 @@ Feature: Manage Charging Stations
   Scenario: View status of charging stations at a location
     Given there are multiple charging stations at "Berlin"
     When I view the status of charging stations at "Berlin"
-    Then I should see each charging station's type ("AC" or "DC") and current status ("in operation free", "in operation occupied", "out of service")
+    Then I should see each charging station's type ('AC' or 'DC') and current status ('in operation free', 'in operation occupied', 'out of service')
 
   Scenario: Change status of a charging station to "out of service"
     Given a charging station "Station_A1" at "Hamburg" is "in operation free"

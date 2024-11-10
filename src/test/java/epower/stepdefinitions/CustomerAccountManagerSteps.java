@@ -117,7 +117,8 @@ public class CustomerAccountManagerSteps {
     ChargingStation cs = new ChargingStation("1234", "Testort", "AC");
     @When("A user transaction brings their pre paid balance below 0")
     public void getUserBalanceBelow0(){
-        noMoney.getBalanceBelow0(5);
+        noMoney.setBalance(-5);
+
     }
 
     @Then("This user shouldn't be able to charge anymore until his balance is positive again")

@@ -63,7 +63,7 @@ public class Customer {
         transaction.setEndTime(java.time.LocalDateTime.now());
     }
     // helpFunc
-    public void getBalanceBelow0(int x){
+    /*public void getBalanceBelow0(int x){
         this.balance -= x;
-    }
+    }*/
 }
