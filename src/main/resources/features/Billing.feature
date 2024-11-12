@@ -32,3 +32,16 @@ Feature: Administration and Billing
     Then the report should list all sessions sorted by start time
     And include details like session number, location, charging point, mode, duration, energy consumed, and price
     And show the total amount charged
+
+  # Error Cases:
+  Scenario: Negative price input
+    Given I am an operator
+    When I try to input a negative price for a station
+    Then the price should stay the same
+
+
+  # Edge Cases:
+  Scenario: Not enough balance for charging request
+    Given I am a Customer
+    When I try to start a charging request that exceeds my prepaid balance
+    Then The system should prevent the session from starting

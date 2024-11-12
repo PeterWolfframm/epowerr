@@ -49,11 +49,21 @@ public class Customer {
     }
 
     public void startTransaction(Transaction transaction) {
-        transactions.add(transaction);
+        if(this.canStartCharging(transaction.getPricePerKWh())){
+            transactions.add(transaction);
+        }
+        else if(this.balance<0){
+            System.out.println("Pay your existing bills first please.");
+        }
+        else System.out.println("Your balance is not high enough");
     }
 
     public void endTransaction(Transaction transaction) {
         this.balance -= transaction.calculateTotalPrice();
         transaction.setEndTime(java.time.LocalDateTime.now());
     }
+    // helpFunc
+    /*public void getBalanceBelow0(int x){
+        this.balance -= x;
+    }*/
 }

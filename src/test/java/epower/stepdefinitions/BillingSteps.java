@@ -3,9 +3,13 @@ package epower.stepdefinitions;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.epower.model.*;
+import java.util.List;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.epower.model.PricingManagement;
 import org.epower.model.Report;
 import org.epower.model.Transaction;
+
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -14,6 +18,8 @@ public class BillingSteps {
     private PricingManagement pricingManagement = new PricingManagement();
     private Report report = new Report();
     private Transaction transaction;
+    Customer x = new Customer("8", "John Doe"); // Balance still 0
+    List<Transaction> l =  x.getTransactionHistory();
 
     @Given("the current price for {string} charging in {string} is {double} EUR per kWh")
     public void setCurrentPrice(String chargingMode, String location, double price) {
@@ -113,5 +119,17 @@ public class BillingSteps {
         else if(chargingMode.equals("DC")){
             assertEquals(dc, pricingManagement.getDCPrice(location), "Price was not updated correctly");
         }
+    }
+
+
+    // EDGE Cases
+    @When("A customer tries to start a charging request that exceeds their prepaid balance (if they have less balance than the cost of 1 kWh)")
+    public void tryStartTransaction(Transaction t){
+        x.startTransaction(t);
+    }
+
+    @Then("The transaction shouldn't be started")
+    public void checkTransactionNotStarted(){
+        assertEquals(x.getTransactionHistory(), l, "Transaction mismatch");
     }
 }

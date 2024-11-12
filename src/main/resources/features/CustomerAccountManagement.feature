@@ -37,3 +37,21 @@ Feature: Manage Customer Accounts
     Then they should see their current balance
     And a list of all past charging sessions and top-ups, sorted by date
     And details like session number, location, charging point, mode, duration, energy consumed, and price
+
+
+  # Error Cases:
+  Scenario: Customer tops up their account with negative amount
+    Given I am a customer
+    When I try to top up my account with a negative amount
+    Then the amount should stay the same
+
+  Scenario: Register a new Customer without providing all the required registration information
+    Given a user wants to register for a charging account
+    When they don't provide all the required registration information
+    Then no account should get created
+
+  # Edge Cases:
+  Scenario: Negative account balance after transaction
+    Given A user just finished a charging session
+    When The transaction from this session brings the pre paid balance of a user below 0
+    Then This user shouldn't be able to charge anymore until his balance is positive again
