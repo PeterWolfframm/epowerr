@@ -1,12 +1,13 @@
 package epower.tests;
 
+
 import org.epower.model.ChargingStation;
+
 import org.epower.model.Customer;
 import org.epower.model.Location;
 import org.epower.model.Transaction;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -68,6 +69,7 @@ class CustomerTest {
         customer.topUp(-50.0);
         assertEquals(100.0, customer.getBalance());
     }
+  
     // EDGE CASE TEST
     @Test
     void testNegativeAmountAfterTransaction(){
@@ -83,4 +85,5 @@ class CustomerTest {
         customer.startTransaction(n);
         assertNotEquals(customer.getTransactionHistory().size(), 0);
     }
+
 }

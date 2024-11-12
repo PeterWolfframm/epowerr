@@ -4,6 +4,7 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.epower.model.ChargingStation;
+
 import org.epower.model.Customer;
 import org.epower.model.Location;
 import org.epower.model.Transaction;
@@ -11,6 +12,9 @@ import org.epower.model.Transaction;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class CustomerAccountManagerSteps {
 
@@ -24,6 +28,16 @@ public class CustomerAccountManagerSteps {
     @Then("a new customer account should be created")
     public void verifyCustomerAccountCreated() {
         assertNotNull(customer, "Customer account was not created");
+    }
+
+    //ERROR CASE
+    @When("User versucht sich ohne Daten anzulegen")
+    public void createUserWithoutData(){
+        //Customer keinName = new Customer();
+    }
+    @Then("The User should not be created")
+    public void checkUserWithoutDataNotCreated(){
+        // check das eh kein User erstellt wurde?
     }
 
     @Then("they should receive a unique customer identity")

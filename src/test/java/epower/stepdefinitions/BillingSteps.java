@@ -4,8 +4,12 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.epower.model.*;
-
 import java.util.List;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.epower.model.PricingManagement;
+import org.epower.model.Report;
+import org.epower.model.Transaction;
+
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -116,6 +120,7 @@ public class BillingSteps {
             assertEquals(dc, pricingManagement.getDCPrice(location), "Price was not updated correctly");
         }
     }
+
 
     // EDGE Cases
     @When("A customer tries to start a charging request that exceeds their prepaid balance (if they have less balance than the cost of 1 kWh)")
