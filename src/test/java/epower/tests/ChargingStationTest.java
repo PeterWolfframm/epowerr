@@ -62,7 +62,7 @@ class ChargingStationTest {
         assertNotEquals("AA", station.getType());
     }
 
-    // EDGE CASE TEST
+    // EDGE CASE TESTS
     @Test
     void testNotEnoughBalanceForCharge(){
         List<Transaction> before = customer.getTransactionHistory();
